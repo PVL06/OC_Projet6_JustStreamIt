@@ -1,0 +1,69 @@
+export class MoviesApi {
+    constructor() {
+        this.baseUrl = "http://localhost:8000/api/v1/"
+    }
+
+    async getCategories() {
+        let categories = []
+        let url = `${this.baseUrl}genres/`;
+        while (url) {
+            const data = await this.#getData(url)
+            if (data) {
+                url = data.next
+                data.results.map(category => categories.push(category.name)) 
+            } else {
+                url = false
+            }
+        }
+        return categories
+    }
+
+    async getMovieInfo(id) {
+        const url = `${this.baseUrl}titles/${id}`
+        return await this.#getData(url)
+    }
+
+    async getBestMovie() {
+        let url = `${this.baseUrl}titles/?sort_by=-imdb_score`
+        const data = await this.#getData(url)
+        if (data) {return data.results[0]}
+    }
+
+    async getBestMovies() {
+        let bestMovies = []
+        let url = `${this.baseUrl}titles/?sort_by=-imdb_score`
+        for (let step = 0; step < 2; step++) {
+            const data = await this.#getData(url)
+            if (data) {
+                data.results.map(movie => bestMovies.push(movie))
+                url = data.next
+            }
+        }  
+        return bestMovies.slice(1, 7)
+    }
+
+    async getBestMoviesByCategory(catergory) {
+        let movies = []
+        let url = `${this.baseUrl}titles/?genre_contains=${catergory}&sort_by=-imdb_score`
+        for (let step = 0; step < 2; step++) {
+            const data = await this.#getData(url)
+            if (data) {
+                data.results.map(movie => movies.push(movie))
+                url = data.next
+            }
+        }
+        return movies.slice(0, 6)
+    }
+
+    async #getData(url) {
+        let data
+        await fetch(url)
+        .then(response => {
+            if (!response.ok) {throw new Error(response.status)}
+            return response.json()
+        })
+        .then(json => data = json)
+        .catch(error => console.error(error))
+        return data
+    }
+}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Just Stream It</title>
+    <link rel="shortcut icon" href="./assets/img/little_logo.png">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <header>
+        <img src="/assets/img/big_logo.png" alt="just stream it logo">
+        <h1>Vidéo à la demande</h1>
+    </header>
+    <main>
+        <section>
+            <h2>Meilleur film</h2>
+            <div id="best-movie"></div>
+        </section>
+        <section>
+            <h2>Films les mieux notés</h2>
+            <div class="movies-container" id="all"></div>
+        </section>
+        <section>
+            <h2>Aventure</h2>
+            <div class="movies-container" id="adventure"></div>
+        </section>
+            <h2>Comedie</h2>
+            <div class="movies-container" id="comedy"></div>
+        </section>
+        <section>
+            <h2>Autres</h2>
+            <div class="movies-container" id="others"></div>
+        </section>
+    </main>
+    <div class="modal">
+        <div class="modal-box">
+            <div class="modal-content"></div>
+            <button class="closeModal">Fermer</button>
+        </div>
+    </div>
+    <script type="module" src="./main.js"></script>
+</body>
+</html>
