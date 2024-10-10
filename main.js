@@ -13,9 +13,11 @@ async function displayBestMovie() {
     bestMovieSelector.innerHTML = `
         <img src = "${movie.image_url}"/>
         <div>
-            <h3>${movie.title}<h3/>
+            <h3>${movie.title}</h3>
             <p>${movie.description}</p>
-            <button type="button" class="info-btn" data-id=${movie.id}>Détail</button>
+            <div class="best-btn">
+                <button type="button" class="info-btn" data-id=${movie.id}>Détails</button>
+            </div>
         </div>
     `
 }
