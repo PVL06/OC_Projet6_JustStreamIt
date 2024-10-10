@@ -10,28 +10,50 @@
 <body>
     <header>
         <img src="/assets/img/big_logo.png" alt="just stream it logo">
-        <h1>Vidéo à la demande</h1>
+        <h1>Vidéos à la demande</h1>
     </header>
     <main>
+
         <section>
             <h2>Meilleur film</h2>
             <div id="best-movie"></div>
         </section>
+
         <section>
             <h2>Films les mieux notés</h2>
             <div class="movies-container" id="all"></div>
+            <div class="show-more">
+                <button>Voir plus</button>
+            </div>
         </section>
+
         <section>
             <h2>Aventure</h2>
             <div class="movies-container" id="adventure"></div>
+            <div class="show-more">
+                <button>Voir plus</button>
+            </div>
         </section>
+
+        <section>
             <h2>Comedie</h2>
             <div class="movies-container" id="comedy"></div>
+            <div class="show-more">
+                <button>Voir plus</button>
+            </div>
         </section>
+
         <section>
-            <h2>Autres</h2>
+            <div class="other-head">
+                <h2>Autres</h2>
+                <select name="category" id=""></select>
+            </div>
             <div class="movies-container" id="others"></div>
+            <div class="show-more">
+                <button>Voir plus</button>
+            </div>
         </section>
+        
     </main>
     <div class="modal">
         <div class="modal-box">
