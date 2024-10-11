@@ -23,12 +23,6 @@ export class MoviesApi {
         return await this.#getData(url)
     }
 
-    async getBestMovie() {
-        let url = `${this.baseUrl}titles/?sort_by=-imdb_score`
-        const data = await this.#getData(url)
-        if (data) {return data.results[0]}
-    }
-
     async getBestMovies() {
         let bestMovies = []
         let url = `${this.baseUrl}titles/?sort_by=-imdb_score`
@@ -39,7 +33,7 @@ export class MoviesApi {
                 url = data.next
             }
         }  
-        return bestMovies.slice(1, 7)
+        return bestMovies
     }
 
     async getBestMoviesByCategory(catergory) {
@@ -51,6 +45,7 @@ export class MoviesApi {
                 data.results.map(movie => movies.push(movie))
                 url = data.next
             }
+            if (!data.next) break
         }
         return movies.slice(0, 6)
     }
