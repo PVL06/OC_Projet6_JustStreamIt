@@ -213,6 +213,14 @@ h2 {
     .movies-container {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .reduce:nth-last-child(-n + 2) {
+        display: none;
+    }
+
+    .show-more {
+        display: flex;
+    }
 }
 
 /* ---Media query smartphone--- */
@@ -245,5 +253,13 @@ h2 {
     .movies-container {
         display: flex;
         flex-direction: column;
+    }
+
+    .reduce:nth-last-child(-n + 4) {
+        display: none;
+    }
+
+    .show-more {
+        display: flex;
     }
 }

@@ -24,7 +24,7 @@ function displayBestMovie(movie) {
 function displayBestMoviesAll(bestMovies) {
     bestMovies.forEach(element => {
         all.innerHTML += `
-        <div class="box" style="background: url(${element.image_url}) center/cover">
+        <div class="box reduce" style="background: url(${element.image_url}) center/cover">
             <div class="info">
                 <p>${element.title}</p>
                 <div class="info-btn-ctn">
@@ -40,7 +40,7 @@ function displayBestMoviesCategory(category, movies) {
     document.getElementById(category).innerHTML = ``
     movies.forEach(element => {
         document.getElementById(category).innerHTML += `
-        <div class="box" style="background: url(${element.image_url}) center/cover">
+        <div class="box reduce" style="background: url(${element.image_url}) center/cover">
             <div class="info">
                 <p>${element.title}</p>
                 <div class="info-btn-ctn">
