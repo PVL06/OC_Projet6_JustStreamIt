@@ -27,7 +27,9 @@ function displayBestMoviesAll(bestMovies) {
         <div class="box" style="background: url(${element.image_url}) center/cover">
             <div class="info">
                 <p>${element.title}</p>
-                <button type="button" class="info-btn" data-id=${element.id}>Détails</button> 
+                <div class="info-btn-ctn">
+                    <button type="button" class="info-btn" data-id=${element.id}>Détails</button> 
+                </div>
             </div>
         </div>
         `
@@ -41,7 +43,9 @@ function displayBestMoviesCategory(category, movies) {
         <div class="box" style="background: url(${element.image_url}) center/cover">
             <div class="info">
                 <p>${element.title}</p>
-                <button type="button" class="info-btn" data-id=${element.id}>Détails</button> 
+                <div class="info-btn-ctn">
+                    <button type="button" class="info-btn" data-id=${element.id}>Détails</button> 
+                </div>
             </div>
         </div>
         `
