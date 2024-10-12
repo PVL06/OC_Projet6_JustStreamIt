@@ -161,7 +161,7 @@ h2 {
     margin: 20px;
 }
 
-.show-more > button {
+.show-more button {
     background: red;
     padding: 5px 80px;
 }

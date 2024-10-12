@@ -2,7 +2,7 @@ import {MoviesApi} from "./data.js"
 
 const moviesData = new MoviesApi()
 const categories = await moviesData.getCategories()
-
+const showBtn = document.querySelectorAll(".show-more button")
 const modal = document.querySelector(".modal")
 const modalContent = document.querySelector(".modal-content")
 const modalCloseBtn = document.querySelector(".closeModal")
@@ -52,18 +52,32 @@ function displayBestMoviesCategory(category, movies) {
     })
 }
 
-function otherCategorySelector(selected) {
+function otherCategorySelector(categoryName) {
     if (categories) {
         categories.forEach(category => {
             select.innerHTML += `
             <option value="${category}" ${
-                category === selected ? "selected" : ""
+                category === categoryName ? "selected" : ""
             }>${
                 category
             }</option>
             `
         })
     }
+}
+
+function toggleDisplayMovies(dataId) {
+    const moviesBox = document.querySelectorAll(`#${dataId} .box`)
+    moviesBox.forEach(box => box.classList.toggle("reduce"))
+    showBtn.forEach(btn => {
+        if (btn.dataset.category == dataId) {
+            if (btn.innerHTML === "Voir plus") {
+                btn.innerHTML = "Voir moins"
+            } else {
+                btn.innerHTML = "Voir plus"
+            }
+        }
+    })
 }
 
 function infoBtnEvent() {
@@ -102,7 +116,14 @@ async function start(categories) {
 }
 
 await start(categories)
+
+/* events listener */
+
 infoBtnEvent()
+
+showBtn.forEach(btn => btn.addEventListener("click", (e) => {
+    toggleDisplayMovies(e.target.dataset.category)
+}))
 
 select.addEventListener("change", async (e) => {
     const selection = e.target.value
