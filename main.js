@@ -14,8 +14,8 @@ function displayBestMovie(movie) {
         <div class="best-content">
             <h3>${movie.title}</h3>
             <p>${movie.description}</p>
-            <div class="best-btn">
-                <button type="button" class="info-btn" data-id=${movie.id}>Détails</button>
+            <div class="info-btn-ctn" id="best-btn-ctn">
+                <button type="button" data-id=${movie.id}>Détails</button>
             </div>
         </div>
     `
@@ -28,7 +28,7 @@ function displayBestMoviesAll(bestMovies) {
             <div class="info">
                 <p>${element.title}</p>
                 <div class="info-btn-ctn">
-                    <button type="button" class="info-btn" data-id=${element.id}>Détails</button> 
+                    <button type="button" data-id=${element.id}>Détails</button> 
                 </div>
             </div>
         </div>
@@ -38,13 +38,21 @@ function displayBestMoviesAll(bestMovies) {
 
 function displayBestMoviesCategory(category, movies) {
     document.getElementById(category).innerHTML = ``
+    const minElement = movies.length > 2
+    const btn = document.querySelector(`.show-more button[data-category=${category}]`)
+    if (!minElement) {
+        btn.style.display = "none"
+        btn.innerHTML = "Voir plus"
+    } else {
+        btn.style.display = "flex"
+    }
     movies.forEach(element => {
         document.getElementById(category).innerHTML += `
-        <div class="box reduce" style="background: url(${element.image_url}) center/cover">
+        <div class="box ${minElement ? "reduce" : ""}" style="background: url(${element.image_url}) center/cover">
             <div class="info">
                 <p>${element.title}</p>
                 <div class="info-btn-ctn">
-                    <button type="button" class="info-btn" data-id=${element.id}>Détails</button> 
+                    <button type="button" data-id=${element.id}>Détails</button> 
                 </div>
             </div>
         </div>
@@ -55,12 +63,9 @@ function displayBestMoviesCategory(category, movies) {
 function otherCategorySelector(categoryName) {
     if (categories) {
         categories.forEach(category => {
+            const selected = category === categoryName
             select.innerHTML += `
-            <option value="${category}" ${
-                category === categoryName ? "selected" : ""
-            }>${
-                category
-            }</option>
+            <option value="${category}" ${selected ? "selected" : ""}>${category}</option>
             `
         })
     }
@@ -69,19 +74,17 @@ function otherCategorySelector(categoryName) {
 function toggleDisplayMovies(dataId) {
     const moviesBox = document.querySelectorAll(`#${dataId} .box`)
     moviesBox.forEach(box => box.classList.toggle("reduce"))
-    showBtn.forEach(btn => {
-        if (btn.dataset.category == dataId) {
-            if (btn.innerHTML === "Voir plus") {
-                btn.innerHTML = "Voir moins"
-            } else {
-                btn.innerHTML = "Voir plus"
-            }
-        }
-    })
+
+    const btn = document.querySelector(`.show-more button[data-category=${dataId}]`)
+    if (btn.innerHTML === "Voir plus") {
+        btn.innerHTML = "Voir moins"
+    } else {
+        btn.innerHTML = "Voir plus"
+    }
 }
 
 function infoBtnEvent() {
-    const infoBtn = document.querySelectorAll(".info-btn")
+    const infoBtn = document.querySelectorAll(".info-btn-ctn button")
     infoBtn.forEach(btn => btn.addEventListener("click", (e) => displayModal(e.target.dataset.id)))
 }
 
@@ -128,7 +131,6 @@ showBtn.forEach(btn => btn.addEventListener("click", (e) => {
 select.addEventListener("change", async (e) => {
     const selection = e.target.value
     const movies = await moviesData.getBestMoviesByCategory(selection)
-    otherCategorySelector(selection)
     displayBestMoviesCategory("others", movies)
     infoBtnEvent()
 })

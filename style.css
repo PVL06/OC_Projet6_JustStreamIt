@@ -64,15 +64,20 @@ h1 {
 
 header {
     display: flex;
-    align-items: center;
-    background-color: #61787F;
+    justify-content: center;
     height: 100px;
-    width: 100%;
+    background-color: #61787F;
 }
 
-header > img {
+.header-ctn {
+    display: flex;
+    align-items: center;
+    width: 95%;
+    max-width: 1054px;
+}
+
+.header-ctn > img {
     width: 150px;
-    margin: 0 50px;
 }
 
 /* ---Main--- */
@@ -107,12 +112,7 @@ h2 {
     margin: 0 20px;
 }
 
-.best-btn {
-    text-align: right;
-    margin: 20px;
-}
-
-#bestmovie button {
+#best-btn-ctn button {
     background: red;
     padding: 10px 30px;
 }
@@ -150,7 +150,7 @@ h2 {
     width: 100%;
 }
 
-.info-btn {
+.info-btn-ctn button {
     background: black;
     padding: 3px 30px;
 }
@@ -196,7 +196,7 @@ h2 {
     justify-content: center;
 }
 
-/* ---Media query tablette--- */
+/* ---Media query tablet--- */
 @media screen and (max-width: 850px) {
     h1, h3 {
         font-size: 2em;
@@ -225,7 +225,7 @@ h2 {
 
 /* ---Media query smartphone--- */
 @media screen and (max-width: 500px) {
-    header {
+    .header-ctn {
         justify-content: center;
     }
 
@@ -246,8 +246,8 @@ h2 {
         margin: 0;
     }
 
-    .best-btn {
-        text-align: center;
+    #best-btn-ctn {
+        justify-content: center;
     }
 
     .movies-container {
