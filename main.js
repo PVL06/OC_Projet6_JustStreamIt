@@ -2,6 +2,7 @@ import {MoviesApi} from "./data.js"
 
 const moviesData = new MoviesApi()
 const categories = await moviesData.getCategories()
+
 const showBtn = document.querySelectorAll(".show-more button")
 const modal = document.querySelector(".modal")
 const modalContent = document.querySelector(".modal-content")
@@ -37,7 +38,6 @@ function displayBestMoviesAll(bestMovies) {
 }
 
 function displayBestMoviesCategory(category, movies) {
-    document.getElementById(category).innerHTML = ``
     const minElement = window.innerWidth < 500 ? 2 : 4
     const showButtonMore = movies.length > minElement
     const btn = document.querySelector(`.show-more button[data-category=${category}]`)
@@ -47,6 +47,7 @@ function displayBestMoviesCategory(category, movies) {
         btn.style.display = "none"
         btn.innerHTML = "Voir plus"
     }
+    document.getElementById(category).innerHTML = ``
     movies.forEach(element => {
         document.getElementById(category).innerHTML += `
         <div class="box ${showButtonMore ? "reduce" : ""}" style="background: url(${element.image_url}) center/cover">
@@ -61,10 +62,10 @@ function displayBestMoviesCategory(category, movies) {
     })
 }
 
-function otherCategorySelector(categoryName) {
+function InitOtherCategorySelector(categorySelected) {
     if (categories) {
         categories.forEach(category => {
-            const selected = category === categoryName
+            const selected = category === categorySelected
             select.innerHTML += `
             <option value="${category}" ${selected ? "selected" : ""}>${category}</option>
             `
@@ -72,11 +73,11 @@ function otherCategorySelector(categoryName) {
     }
 }
 
-function toggleDisplayMovies(categorySelector) {
-    const moviesBox = document.querySelectorAll(`#${categorySelector} .box`)
+function toggleDisplayMovies(category) {
+    const moviesBox = document.querySelectorAll(`#${category} .box`)
     moviesBox.forEach(box => box.classList.toggle("reduce"))
 
-    const btn = document.querySelector(`.show-more button[data-category=${categorySelector}]`)
+    const btn = document.querySelector(`.show-more button[data-category=${category}]`)
     if (btn.innerHTML === "Voir plus") {
         btn.innerHTML = "Voir moins"
     } else {
@@ -115,7 +116,7 @@ async function start() {
     }
 
     const selectedMovies = await moviesData.getBestMoviesByCategory("Action")
-    otherCategorySelector("Action")
+    InitOtherCategorySelector("Action")
     displayBestMoviesCategory("others", selectedMovies)
 }
 
