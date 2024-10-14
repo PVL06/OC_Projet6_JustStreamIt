@@ -4,7 +4,7 @@ export class MoviesApi {
     }
 
     async getCategories() {
-        let categories = []
+        const categories = []
         let url = `${this.baseUrl}genres/`;
         while (url) {
             const data = await this.#getData(url)
@@ -24,7 +24,7 @@ export class MoviesApi {
     }
 
     async getBestMovies() {
-        let bestMovies = []
+        const bestMovies = []
         let url = `${this.baseUrl}titles/?sort_by=-imdb_score`
         for (let step = 0; step < 2; step++) {
             const data = await this.#getData(url)
@@ -37,7 +37,7 @@ export class MoviesApi {
     }
 
     async getBestMoviesByCategory(catergory) {
-        let movies = []
+        const movies = []
         let url = `${this.baseUrl}titles/?genre_contains=${catergory}&sort_by=-imdb_score`
         for (let step = 0; step < 2; step++) {
             const data = await this.#getData(url)
