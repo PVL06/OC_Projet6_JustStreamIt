@@ -25,7 +25,7 @@
             <h2>Films les mieux notés</h2>
             <div class="movies-container" id="all"></div>
             <div class="show-more">
-                <button data-category="all">Voir plus</button>
+                <button class="redbtn" data-category="all">Voir plus</button>
             </div>
         </section>
 
@@ -33,7 +33,7 @@
             <h2>Aventure</h2>
             <div class="movies-container" id="adventure"></div>
             <div class="show-more">
-                <button data-category="adventure">Voir plus</button>
+                <button class="redbtn" data-category="adventure">Voir plus</button>
             </div>
         </section>
 
@@ -41,7 +41,7 @@
             <h2>Comedie</h2>
             <div class="movies-container" id="comedy"></div>
             <div class="show-more">
-                <button data-category="comedy">Voir plus</button>
+                <button class="redbtn" data-category="comedy">Voir plus</button>
             </div>
         </section>
 
@@ -52,7 +52,7 @@
             </div>
             <div class="movies-container" id="others"></div>
             <div class="show-more">
-                <button data-category="others">Voir plus</button>
+                <button class="redbtn" data-category="others">Voir plus</button>
             </div>
         </section>
         
@@ -60,7 +60,9 @@
     <div class="modal">
         <div class="modal-box">
             <div class="modal-content"></div>
-            <button class="closeModal">Fermer</button>
+            <div class="close-modal-ctn">
+                <button class="redbtn" id="closeModal">Fermer</button>
+            </div>
         </div>
     </div>
     <script type="module" src="./main.js"></script>

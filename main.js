@@ -6,7 +6,7 @@ const categories = await moviesData.getCategories()
 const showBtn = document.querySelectorAll(".show-more button")
 const modal = document.querySelector(".modal")
 const modalContent = document.querySelector(".modal-content")
-const modalCloseBtn = document.querySelector(".closeModal")
+const modalCloseBtn = document.querySelector("#closeModal")
 
 
 function displayBestMovie(movie) {
@@ -92,14 +92,31 @@ function infoBtnEvent() {
 
 async function displayModal(id) {
     modal.style.display = "flex"
+    document.body.style.overflow = "hidden"
     const data = await moviesData.getMovieInfo(id)
+    console.log(modalContent);
+    
     modalContent.innerHTML = `
-    <div>
-        <div>
-            <img src=${data.image_url}/>
-            <p>${data.title}</p>
+        <div class="modal-header">
+            <h3 class="strong">${data.title}</h3>
+            <p class="strong">${data.year} - ${data.genres.join(', ')}</p>
+            <p class="strong">${data.duration} minutes (${data.countries.join(', ')})</p>
+            <p class="strong">IMDB score: ${data.imdb_score}/10</p>
         </div>
-    </div>
+        <div class class="modal-realize">
+            <p class="strong">Réalisé par:</p>
+            <p>${data.directors.join(', ')}</p>
+        </div>
+        <div class="modal-description">
+            <p>${data.long_description}</p>
+        </div>
+        <div class="modal-img">
+            <img src=${data.image_url}/>
+        </div>
+        <div class="modal-actors">
+            <p class="strong">Avec: </p>
+            <p>${data.actors.join(', ')}</p>
+        </div>
     `
 }
 
@@ -137,4 +154,7 @@ select.addEventListener("change", async (e) => {
     infoBtnEvent()
 })
 
-modalCloseBtn.addEventListener("click", () => modal.style.display = "none")
+modalCloseBtn.addEventListener("click", () => {
+    modal.style.display = "none"
+    document.body.style.overflow = "auto"
+})
