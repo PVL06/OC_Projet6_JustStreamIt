@@ -38,17 +38,18 @@ function displayBestMoviesAll(bestMovies) {
 
 function displayBestMoviesCategory(category, movies) {
     document.getElementById(category).innerHTML = ``
-    const minElement = movies.length > 2
+    const minElement = window.innerWidth < 500 ? 2 : 4
+    const showButtonMore = movies.length > minElement
     const btn = document.querySelector(`.show-more button[data-category=${category}]`)
-    if (!minElement) {
+    if (showButtonMore) {
+        btn.style.display = "flex"
+    } else {
         btn.style.display = "none"
         btn.innerHTML = "Voir plus"
-    } else {
-        btn.style.display = "flex"
     }
     movies.forEach(element => {
         document.getElementById(category).innerHTML += `
-        <div class="box ${minElement ? "reduce" : ""}" style="background: url(${element.image_url}) center/cover">
+        <div class="box ${showButtonMore ? "reduce" : ""}" style="background: url(${element.image_url}) center/cover">
             <div class="info">
                 <p>${element.title}</p>
                 <div class="info-btn-ctn">
@@ -71,11 +72,11 @@ function otherCategorySelector(categoryName) {
     }
 }
 
-function toggleDisplayMovies(dataId) {
-    const moviesBox = document.querySelectorAll(`#${dataId} .box`)
+function toggleDisplayMovies(categorySelector) {
+    const moviesBox = document.querySelectorAll(`#${categorySelector} .box`)
     moviesBox.forEach(box => box.classList.toggle("reduce"))
 
-    const btn = document.querySelector(`.show-more button[data-category=${dataId}]`)
+    const btn = document.querySelector(`.show-more button[data-category=${categorySelector}]`)
     if (btn.innerHTML === "Voir plus") {
         btn.innerHTML = "Voir moins"
     } else {
@@ -101,7 +102,7 @@ async function displayModal(id) {
     `
 }
 
-async function start(categories) {
+async function start() {
     const bestMoviesData = await moviesData.getBestMovies()
     const bestMovieData = await moviesData.getMovieInfo(bestMoviesData[0].id)
     displayBestMovie(bestMovieData)
@@ -114,11 +115,11 @@ async function start(categories) {
     }
 
     const selectedMovies = await moviesData.getBestMoviesByCategory("Action")
-    otherCategorySelector(categories, "Action")
+    otherCategorySelector("Action")
     displayBestMoviesCategory("others", selectedMovies)
 }
 
-await start(categories)
+await start()
 
 /* events listener */
 
