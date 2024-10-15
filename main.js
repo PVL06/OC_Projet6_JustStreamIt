@@ -8,7 +8,10 @@ const modal = document.querySelector(".modal")
 const modalContent = document.querySelector(".modal-content")
 const modalCloseBtn = document.querySelector("#closeModal")
 
-
+/**
+ * Display the first section for the best movie
+ * @param {Object} movie Movie object returned by the API 
+ */
 function displayBestMovie(movie) {
     bestmovie.innerHTML = `
         <img src = "${movie.image_url}"/>
@@ -22,6 +25,10 @@ function displayBestMovie(movie) {
     `
 }
 
+/**
+ * Display the second section for best movies in all categories with button show more for tablet and smartphone
+ * @param {Object[]} bestMovies Array of movies object returned by the API 
+ */
 function displayBestMoviesAll(bestMovies) {
     bestMovies.forEach(element => {
         all.innerHTML += `
@@ -37,6 +44,11 @@ function displayBestMoviesAll(bestMovies) {
     })
 }
 
+/**
+ * Display best movies in category container selected with button show more for tablet and smartphone
+ * @param {String} category Name of category container
+ * @param {Object[]} movies Array of movies returned by the API
+ */
 function displayBestMoviesCategory(category, movies) {
     const minElement = window.innerWidth < 500 ? 2 : 4
     const showButtonMore = movies.length > minElement
@@ -62,6 +74,10 @@ function displayBestMoviesCategory(category, movies) {
     })
 }
 
+/**
+ * Display modal window with more information to the movie
+ * @param {Number} movieId Movie API id
+ */
 async function displayModal(movieId) {
     const movie = await moviesData.getMovieInfo(movieId)
     modal.style.display = "flex"
@@ -91,6 +107,10 @@ async function displayModal(movieId) {
     `
 }
 
+/**
+ * Put each category in select box and initialize the first category selected
+ * @param {String} categorySelected Name of initial category
+ */
 function InitOtherCategorySelector(categorySelected) {
     if (categories) {
         categories.forEach(category => {
@@ -102,6 +122,10 @@ function InitOtherCategorySelector(categorySelected) {
     }
 }
 
+/**
+ * Change number of movie to display with show more or less button
+ * @param {String} category Category container selected
+ */
 function toggleDisplayMovies(category) {
     const moviesBox = document.querySelectorAll(`#${category} .box`)
     moviesBox.forEach(box => box.classList.toggle("reduce"))
@@ -114,12 +138,15 @@ function toggleDisplayMovies(category) {
     }
 }
 
+/*Function to add event for each button 'Détail' for show the modal windows */
 function infoBtnEvent() {
     const infoBtn = document.querySelectorAll(".info-btn-ctn button")
     infoBtn.forEach(btn => btn.addEventListener("click", (e) => displayModal(e.target.id)))
 }
 
-
+/**
+ * Main function, get data with API, manage the display and add event for each button
+ */
 async function main() {
     const bestMoviesData = await moviesData.getBestMovies()
     const bestMovieData = await moviesData.getMovieInfo(bestMoviesData[0].id)
