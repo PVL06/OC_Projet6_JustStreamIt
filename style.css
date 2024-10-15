@@ -330,8 +330,4 @@ h2 {
     .reduce:nth-child(n + 3) {
         display: none;
     }
-
-    .show-more {
-        display: flex;
-    }
 }
