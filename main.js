@@ -16,7 +16,7 @@ function displayBestMovie(movie) {
             <h3>${movie.title}</h3>
             <p>${movie.description}</p>
             <div class="info-btn-ctn" id="best-btn-ctn">
-                <button type="button" data-id=${movie.id}>Détails</button>
+                <button type="button" id="${movie.id}">Détails</button>
             </div>
         </div>
     `
@@ -29,7 +29,7 @@ function displayBestMoviesAll(bestMovies) {
             <div class="info">
                 <p>${element.title}</p>
                 <div class="info-btn-ctn">
-                    <button type="button" data-id=${element.id}>Détails</button> 
+                    <button type="button" id=${element.id}>Détails</button> 
                 </div>
             </div>
         </div>
@@ -54,12 +54,41 @@ function displayBestMoviesCategory(category, movies) {
             <div class="info">
                 <p>${element.title}</p>
                 <div class="info-btn-ctn">
-                    <button type="button" data-id=${element.id}>Détails</button> 
+                    <button type="button" id=${element.id}>Détails</button> 
                 </div>
             </div>
         </div>
         `
     })
+}
+
+async function displayModal(movieId) {
+    const movie = await moviesData.getMovieInfo(movieId)
+    modal.style.display = "flex"
+    document.body.style.overflow = "hidden"
+    
+    modalContent.innerHTML = `
+        <div class="modal-header">
+            <h3 class="strong">${movie.title}</h3>
+            <p class="strong">${movie.year} - ${movie.genres.join(', ')}</p>
+            <p class="strong">${movie.duration} minutes (${movie.countries.join(', ')})</p>
+            <p class="strong">IMDB score: ${movie.imdb_score}/10</p>
+        </div>
+        <div class class="modal-realize">
+            <p class="strong">Réalisé par:</p>
+            <p>${movie.directors.join(', ')}</p>
+        </div>
+        <div class="modal-description">
+            <p>${movie.long_description}</p>
+        </div>
+        <div class="modal-img">
+            <img src=${movie.image_url}/>
+        </div>
+        <div class="modal-actors">
+            <p class="strong">Avec: </p>
+            <p>${movie.actors.join(', ')}</p>
+        </div>
+    `
 }
 
 function InitOtherCategorySelector(categorySelected) {
@@ -87,40 +116,11 @@ function toggleDisplayMovies(category) {
 
 function infoBtnEvent() {
     const infoBtn = document.querySelectorAll(".info-btn-ctn button")
-    infoBtn.forEach(btn => btn.addEventListener("click", (e) => displayModal(e.target.dataset.id)))
+    infoBtn.forEach(btn => btn.addEventListener("click", (e) => displayModal(e.target.id)))
 }
 
-async function displayModal(id) {
-    modal.style.display = "flex"
-    document.body.style.overflow = "hidden"
-    const data = await moviesData.getMovieInfo(id)
-    console.log(modalContent);
-    
-    modalContent.innerHTML = `
-        <div class="modal-header">
-            <h3 class="strong">${data.title}</h3>
-            <p class="strong">${data.year} - ${data.genres.join(', ')}</p>
-            <p class="strong">${data.duration} minutes (${data.countries.join(', ')})</p>
-            <p class="strong">IMDB score: ${data.imdb_score}/10</p>
-        </div>
-        <div class class="modal-realize">
-            <p class="strong">Réalisé par:</p>
-            <p>${data.directors.join(', ')}</p>
-        </div>
-        <div class="modal-description">
-            <p>${data.long_description}</p>
-        </div>
-        <div class="modal-img">
-            <img src=${data.image_url}/>
-        </div>
-        <div class="modal-actors">
-            <p class="strong">Avec: </p>
-            <p>${data.actors.join(', ')}</p>
-        </div>
-    `
-}
 
-async function start() {
+async function main() {
     const bestMoviesData = await moviesData.getBestMovies()
     const bestMovieData = await moviesData.getMovieInfo(bestMoviesData[0].id)
     displayBestMovie(bestMovieData)
@@ -135,26 +135,21 @@ async function start() {
     const selectedMovies = await moviesData.getBestMoviesByCategory("Action")
     InitOtherCategorySelector("Action")
     displayBestMoviesCategory("others", selectedMovies)
+
+    /* events listener */
+    infoBtnEvent()
+    showBtn.forEach(btn => btn.addEventListener("click", (e) => {
+        toggleDisplayMovies(e.target.dataset.category)
+    }))
+    select.addEventListener("change", async () => {
+        const movies = await moviesData.getBestMoviesByCategory(select.value)
+        displayBestMoviesCategory("others", movies)
+        infoBtnEvent()
+    })
+    modalCloseBtn.addEventListener("click", () => {
+        modal.style.display = "none"
+        document.body.style.overflow = "auto"
+    })
 }
 
-await start()
-
-/* events listener */
-
-infoBtnEvent()
-
-showBtn.forEach(btn => btn.addEventListener("click", (e) => {
-    toggleDisplayMovies(e.target.dataset.category)
-}))
-
-select.addEventListener("change", async (e) => {
-    const selection = e.target.value
-    const movies = await moviesData.getBestMoviesByCategory(selection)
-    displayBestMoviesCategory("others", movies)
-    infoBtnEvent()
-})
-
-modalCloseBtn.addEventListener("click", () => {
-    modal.style.display = "none"
-    document.body.style.overflow = "auto"
-})
+main()
