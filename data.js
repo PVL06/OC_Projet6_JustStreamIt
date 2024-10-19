@@ -28,28 +28,23 @@ export class MoviesApi {
     }
 
     async getBestMovies() {
-        const bestMovies = []
-        let url = `${this.baseUrl}titles/?sort_by=-imdb_score`
-        for (let step = 0; step < 2; step++) {
-            const data = await this.#getData(url)
-            if (data) {
-                data.results.map(movie => bestMovies.push(movie))
-                url = data.next
-            }
-        }  
-        return bestMovies
+        let url = `${this.baseUrl}titles/?sort_by=-imdb_score&page_size=7`
+        const data = await this.#getData(url)
+        return data.results
     }
 
     async getBestMoviesByCategory(catergory) {
         const movies = []
-        let url = `${this.baseUrl}titles/?genre_contains=${catergory}&sort_by=-imdb_score`
-        for (let step = 0; step < 2; step++) {
-            const data = await this.#getData(url)
-            if (data) {
-                data.results.map(movie => movies.push(movie))
-                url = data.next
+        let url = `${this.baseUrl}titles/?genre_contains=${catergory}&sort_by=-imdb_score&page_size=10`
+        let data = await this.#getData(url)
+        for (const movie of data.results) {
+            try {
+                await this.#checkImage(movie.image_url)
+                movies.push(movie)
+                
+            } catch {
+                console.error('Remove movie without image');
             }
-            if (!data.next) break
         }
         return movies.slice(0, 6)
     }
@@ -65,4 +60,13 @@ export class MoviesApi {
         .catch(error => console.error(error))
         return data
     }
+
+    #checkImage(src) {
+        return new Promise((resolve, reject) => {
+          let img = new Image()
+          img.onload = () => resolve(img.height > 0)
+          img.onerror = reject
+          img.src = src
+        })
+      }
 }
