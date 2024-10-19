@@ -17,12 +17,27 @@
 }
 
 body {
-    font-family: Oswald;
+    margin: 20px auto;
+    max-width: 1280px;
+    font-family: Oswald, Arial, Helvetica, sans-serif;
     font-weight: 600;
     overflow: auto;
 }
 
+main, header {
+    width: 95%;
+    margin: 0 auto;
+}
+
+h1 {
+    color: white;
+    font-weight: 200;
+    font-size: 3em;
+    margin-left: 50px;
+}
+
 h2 {
+    margin: 20px 0;
     font-size: 2em;
 }
 
@@ -35,14 +50,9 @@ p {
     font-weight: 200;
 }
 
-button {
-    border: none;
-    border-radius: 20px;
-    color: white;
-    letter-spacing: 1px;
-    font: inherit;
-    font-size: 0.8em;
-    cursor: pointer;
+img {
+    width: 100%;
+    max-width: 500px;
 }
 
 select {
@@ -54,25 +64,36 @@ select {
     background-color: white;
 }
 
-.redbtn {
-    padding: 5px 100px;
-    background: red;
-    margin: 20px;
+/* ---button--- */
+
+button {
+    margin: 5px;
+    padding: 3px 30px;
+    background-color: rgb(55, 55, 55);
+    border: none;
+    border-radius: 20px;
+    color: white;
+    letter-spacing: 1px;
+    font: inherit;
+    font-size: 0.8em;
+    cursor: pointer;
 }
 
+.btn-red {
+    background-color: red;
+}
+
+.btn-wide {
+    padding: 3px 100px;
+}
+
+.btn-large {
+    padding: 10px 30px
+}
 
 /* ---Header style--- */
 
-h1 {
-    color: white;
-    font-weight: 200;
-    font-size: 3em;
-    margin-left: 50px;
-}
-
 header {
-    display: flex;
-    justify-content: center;
     height: 100px;
     background-color: #61787F;
 }
@@ -80,25 +101,10 @@ header {
 .header-ctn {
     display: flex;
     align-items: center;
-    width: 95%;
-    max-width: 1280px;
 }
 
-.header-ctn > img {
+.header-ctn img {
     width: 150px;
-}
-
-/* ---Main--- */
-
-main {
-    width: 95%;
-    max-width: 1280px;
-    margin: 0 auto;
-    margin-bottom: 100px;
-}
-
-h2 {
-    margin: 20px 0;
 }
 
 /* ---Best movie--- */
@@ -110,19 +116,10 @@ h2 {
     padding: 20px;
 }
 
-#bestmovie img {
-    width: 100%;
-}
-
 .best-content {
     display: flex;
     flex-direction: column;
     margin: 0 20px;
-}
-
-#best-btn-ctn button {
-    background: red;
-    padding: 10px 30px;
 }
 
 
@@ -158,11 +155,6 @@ h2 {
     width: 100%;
 }
 
-.info-btn-ctn button {
-    background: black;
-    padding: 3px 30px;
-}
-
 .show-more {
     display: none;
     justify-content: center;
@@ -179,18 +171,18 @@ h2 {
 .modal {
     display: none;
     position: fixed;
-    justify-content: center;
     background: white;
     overflow: auto;
     top: 0;
     width: 100%;
+    max-width: 1280px;
 }
 
 .modal-box {
     height: 100vh;
+    width: 100%;
     border: 3px solid black;
     overflow-y: auto;
-    max-width: 1280px;
 }
 
 .modal-content {
@@ -233,11 +225,6 @@ h2 {
     justify-content: center;
 }
 
-.modal-img img {
-    width: 100%;
-    max-width: 500px
-}
-
 .strong {
     font-weight: bold;
 }
@@ -258,7 +245,7 @@ h2 {
         font-size: 1em;
     }
 
-    #best-movie button {
+    .btn-large {
         padding: 5px 15px;
     }
 
@@ -307,6 +294,15 @@ h2 {
 
     h2 {
         text-align: center;
+    }
+
+    .other-head h2 {
+        display: none;
+    }
+
+    select {
+        margin: 20px 0;
+        width: 100%;
     }
 
     #bestmovie {

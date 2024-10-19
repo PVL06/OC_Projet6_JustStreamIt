@@ -19,7 +19,7 @@ function displayBestMovie(movie) {
             <h3>${movie.title}</h3>
             <p>${movie.description}</p>
             <div class="info-btn-ctn" id="best-btn-ctn">
-                <button type="button" id="${movie.id}">Détails</button>
+                <button type="button" class="btn-red btn-large" id="${movie.id}">Détails</button>
             </div>
         </div>
     `
