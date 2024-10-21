@@ -53,6 +53,7 @@ function displayBestMoviesCategory(category, movies) {
     const minElement = window.innerWidth < 500 ? 2 : 4
     const showButtonMore = movies.length > minElement
     const btn = document.querySelector(`.show-more button[data-category=${category}]`)
+    btn.innerHTML = "Voir plus"
     if (showButtonMore) {
         btn.style.display = "flex"
     } else {
