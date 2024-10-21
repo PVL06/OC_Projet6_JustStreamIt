@@ -10,7 +10,7 @@ const modalCloseBtn = document.querySelector("#closeModal")
 
 /**
  * Display the first section for the best movie
- * @param {Object} movie Movie object returned by the API 
+ * @param {Object} movie Movie object returned by the MoviesApi.getMovieInfo 
  */
 function displayBestMovie(movie) {
     bestmovie.innerHTML = `
@@ -26,8 +26,8 @@ function displayBestMovie(movie) {
 }
 
 /**
- * Display the second section for best movies in all categories with button show more for tablet and smartphone
- * @param {Object[]} bestMovies Array of movies object returned by the API 
+ * Display the second section for best movies in all categories with détail button
+ * @param {Object[]} bestMovies Array of movies object returned by MoviesApi.getBestMovies
  */
 function displayBestMoviesAll(bestMovies) {
     bestMovies.forEach(element => {
@@ -45,24 +45,21 @@ function displayBestMoviesAll(bestMovies) {
 }
 
 /**
- * Display best movies in category container selected with button show more for tablet and smartphone
+ * Display best movies in category container selected with détail button
  * @param {String} category Name of category container
- * @param {Object[]} movies Array of movies returned by the API
+ * @param {Object[]} movies Array of movies returned by the MoviesApi.getBestMoviesByCategory
  */
 function displayBestMoviesCategory(category, movies) {
     const minElement = window.innerWidth < 500 ? 2 : 4
     const showButtonMore = movies.length > minElement
     const btn = document.querySelector(`.show-more button[data-category=${category}]`)
+    const categorySelector = document.getElementById(category)
+    
     btn.innerHTML = "Voir plus"
-    if (showButtonMore) {
-        btn.style.display = "flex"
-    } else {
-        btn.style.display = "none"
-        btn.innerHTML = "Voir plus"
-    }
-    document.getElementById(category).innerHTML = ``
+    btn.style.display = showButtonMore ? "flex" : "none"
+    categorySelector.innerHTML = ``
     movies.forEach(element => {
-        document.getElementById(category).innerHTML += `
+        categorySelector.innerHTML += `
         <div class="box ${showButtonMore ? "reduce" : ""}" style="background: url(${element.image_url}) center/cover">
             <div class="info">
                 <p>${element.title}</p>
@@ -129,14 +126,10 @@ function InitOtherCategorySelector(categorySelected) {
  */
 function toggleDisplayMovies(category) {
     const moviesBox = document.querySelectorAll(`#${category} .box`)
-    moviesBox.forEach(box => box.classList.toggle("reduce"))
-
     const btn = document.querySelector(`.show-more button[data-category=${category}]`)
-    if (btn.innerHTML === "Voir plus") {
-        btn.innerHTML = "Voir moins"
-    } else {
-        btn.innerHTML = "Voir plus"
-    }
+    
+    moviesBox.forEach(box => box.classList.toggle("reduce"))
+    btn.innerHTML = btn.innerHTML === "Voir plus" ? "Voir moins" : "Voir plus"
 }
 
 /*Function to add event for each button 'Détail' for show the modal windows */
