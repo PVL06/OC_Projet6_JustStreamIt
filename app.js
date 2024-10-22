@@ -4,8 +4,6 @@ const app = express()
 app.use(express.static('public'))
 
 app.get('/', (req, res) => {
-    console.log(req);
-    
     res.sendFile(path.join(__dirname, "/public/index.html"))
 })
 

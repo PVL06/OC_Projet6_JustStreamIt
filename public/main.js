@@ -109,7 +109,7 @@ async function displayModal(movieId) {
  * Put each category in select box and initialize the first category selected
  * @param {String} categorySelected Name of initial category
  */
-function InitOtherCategorySelector(categorySelected) {
+function initOtherCategorySelector(categorySelected) {
     if (categories) {
         categories.forEach(category => {
             const selected = category === categorySelected
@@ -154,7 +154,7 @@ async function main() {
     }
 
     const selectedMovies = await moviesData.getBestMoviesByCategory("Action")
-    InitOtherCategorySelector("Action")
+    initOtherCategorySelector("Action")
     displayBestMoviesCategory("others", selectedMovies)
 
     /* events listener */
