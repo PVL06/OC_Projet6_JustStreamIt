@@ -1,8 +1,10 @@
+export { MoviesApi }
+
 /**
  * Class with methods to get data to the Movie API
  * Get all category available, get movie info by movie id, get 10 best movies for all or one category
  */
-export class MoviesApi {
+class MoviesApi {
     constructor() {
         this.baseUrl = "http://localhost:8000/api/v1/"
     }
