@@ -1,13 +1,13 @@
 @font-face {
     font-family: Oswald;
     font-weight: 200;
-    src: url(../assets/fonts/Oswald-ExtraLight.ttf);
+    src: url(./assets/fonts/Oswald-ExtraLight.ttf);
 }
 
 @font-face {
     font-family: Oswald;
     font-weight: 600;
-    src: url(../assets/fonts/Oswald-SemiBold.ttf);
+    src: url(./assets/fonts/Oswald-SemiBold.ttf);
 }
 
 * {
@@ -121,7 +121,6 @@ header {
     flex-direction: column;
     margin: 0 20px;
 }
-
 
 /* ---Movies categories--- */
 
