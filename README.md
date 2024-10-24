@@ -1,4 +1,4 @@
-![image](public/assets/img/big_logo.png){ width="280" height="200" style="display: block; margin: 0 auto}
+![image](public/assets/img/big_logo.png)
 
 # OC Projet 6: Just Stream It
 Ce projet s'inscrit dans le cadre du parcours "Développeur d'application Python" sur OpenClassrooms. Il consiste à créer un site web permettant de visualiser en temps réel un classement de films les mieux noté. L'objectif est d'intégrer une maquette en HTML et CSS, responsive aux formats tablette et smartphone, de récupérer les données via une API REST en local, et de rendre le site dynamique en vanilla JavaScript.
